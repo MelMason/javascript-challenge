@@ -28,7 +28,7 @@ tableData.forEach(entry => {
 // Select the button
 var button = d3.select("#filter-btn");
 
-button.on("click", function() {
+button.on("click", function () {
 
   // Select the input element and get the raw HTML node
   var dateFilter = d3.select("#datetime");
@@ -39,13 +39,16 @@ button.on("click", function() {
   console.log(inputValue);
 
   var filteredData = tableData.filter(date => date.datetime === inputValue);
-
+  
   console.log(filteredData);
+
+  tbody.html("");
   filteredData.forEach(newEntry => {
 
+    
     // Append one table row per sighting
     var newRow = tbody.append("tr");
-  
+
     // append one cell for each attribute
     newRow.append("td").text(newEntry.datetime);
     newRow.append("td").text(newEntry.city);
@@ -55,24 +58,4 @@ button.on("click", function() {
     newRow.append("td").text(newEntry.durationMinutes);
     newRow.append("td").text(newEntry.comments);
   });
-//   var newRow= d3.select("table");
-
-//   for (var i = 0; i < filteredData.length; i++) {
-//     newRow = tbody.append("tr");
-//     newRow.append("td").text(datetime[i]);
-//     newRow.append("td").text(city[i]);
-//     newRow.append("td").text(state[i]);
-//     newRow.append("td").text(country[i]);
-//     newRow.append("td").text(shape[i]);
-//     newRow.append("td").text(durationMinutes[i]);
-//     newRow.append("td").text(comments[i]);
-//   }
-// });
-
-// 3. Table must be cleared and reset when a new date is entered.
-inputValue.on("change", function() {
-  var newText = d3.event.target.value;
-  console.log(newText);
 });
-
-// 4. When no date is entered, entire table is rendered
