@@ -23,37 +23,56 @@ tableData.forEach(entry => {
   row.append("td").text(entry.durationMinutes);
   row.append("td").text(entry.comments);
 });
+
 // 2. Filtered table must be rendered when date is entered.
+// Select the button
+var button = d3.select("#filter-btn");
 
-// 3. Table must be cleared and reset when a new date is entered.
+button.on("click", function() {
 
-// 4. When no date is entered, entire table is rendered
+  // Select the input element and get the raw HTML node
+  var dateFilter = d3.select("#datetime");
 
+  // Get the value property of the input element
+  var inputValue = dateFilter.property("value");
 
-// Using the UFO dataset provided in the form of an array of 
-// JavaScript objects, write code that appends a table to your 
-// web page and then adds new rows of data for each UFO sighting.
+  console.log(inputValue);
 
-// // Select the button
-// var button = d3.select("#filter-btn");
+  var filteredData = tableData.filter(date => date.datetime === inputValue);
 
-// button.on("click", function() {
+  console.log(filteredData);
+  filteredData.forEach(newEntry => {
 
-//   // Select the input element and get the raw HTML node
-//   var dateFilter = d3.select("#filters");
+    // Append one table row per sighting
+    var newRow = tbody.append("tr");
+  
+    // append one cell for each attribute
+    newRow.append("td").text(newEntry.datetime);
+    newRow.append("td").text(newEntry.city);
+    newRow.append("td").text(newEntry.state);
+    newRow.append("td").text(newEntry.country);
+    newRow.append("td").text(newEntry.shape);
+    newRow.append("td").text(newEntry.durationMinutes);
+    newRow.append("td").text(newEntry.comments);
+  });
+//   var newRow= d3.select("table");
 
-//   // Get the value property of the input element
-//   var inputValue = dateFilter.property("value");
-
-//   console.log(inputValue);
-//   console.log(tableData);
-
-
-//   var filteredData = tableData.filter(date => date.datetime === inputValue);
-
-//   console.log(filteredData);
+//   for (var i = 0; i < filteredData.length; i++) {
+//     newRow = tbody.append("tr");
+//     newRow.append("td").text(datetime[i]);
+//     newRow.append("td").text(city[i]);
+//     newRow.append("td").text(state[i]);
+//     newRow.append("td").text(country[i]);
+//     newRow.append("td").text(shape[i]);
+//     newRow.append("td").text(durationMinutes[i]);
+//     newRow.append("td").text(comments[i]);
+//   }
 // });
 
-// Use a date form in your HTML document and write 
-// JavaScript code that will listen for events and search 
-// through the date/time column to find rows that match user input.
+// 3. Table must be cleared and reset when a new date is entered.
+inputValue.on("change", function() {
+  var newText = d3.event.target.value;
+  console.log(newText);
+});
+
+// 4. When no date is entered, entire table is rendered
